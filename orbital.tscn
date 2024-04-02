@@ -1,12 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://4egnmik4vj7g"]
+[gd_scene load_steps=7 format=3 uid="uid://4egnmik4vj7g"]
 
 [ext_resource type="Texture2D" uid="uid://di4t01yd5wnf0" path="res://Sprites/Planets/Terran.png" id="1_ya14b"]
 [ext_resource type="Texture2D" uid="uid://giusy1fueh1b" path="res://Sprites/Planets/Baren.png" id="2_r3ojw"]
 [ext_resource type="Script" path="res://Baren.gd" id="3_0v3s8"]
 [ext_resource type="Texture2D" uid="uid://cx60lxdoqysjc" path="res://Sprites/VoidMainShip/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Full health.png" id="4_ggybh"]
 [ext_resource type="Script" path="res://Ship.gd" id="5_asr47"]
+[ext_resource type="Script" path="res://ShipTrail.gd" id="6_7a6t4"]
 
 [node name="Orbital" type="Node2D"]
+
+[node name="ShipTrail" type="Line2D" parent="."]
+width = 2.0
+default_color = Color(0.658824, 0.658824, 0.658824, 1)
+script = ExtResource("6_7a6t4")
 
 [node name="Terran" type="Sprite2D" parent="."]
 position = Vector2(492, 305)
