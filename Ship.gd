@@ -2,15 +2,20 @@ extends Sprite2D
 
 var terran = null
 var G = 1  # m^3 kg^-1 s^-2 (value in real world)
-var velocity = Vector2.UP*15
+@export var velocity = Vector2.UP*30
 var min_distance = INF
+
+var dragging = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	terran = $"../Terran"
+	terran = %Terran
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if dragging:
+		return
+	
 	var k1_p = velocity * delta
 	var k1_v = acceleration($".".global_position, terran.global_position, 1.0, 1000000.0) * delta
 	var k2_p = (velocity + k1_v * 0.5) * delta
@@ -32,6 +37,7 @@ func acceleration(from: Vector2, to: Vector2, from_mass: float, to_mass: float) 
 	# Calculate distance vector between the nodes
 	var distance = direction_to(from, to)
 	var distance_squared = distance.length_squared()
+	
 	# Calculate gravitational force magnitude
 	var force_magnitude = (G * from_mass * to_mass) / distance_squared
 	
@@ -42,3 +48,14 @@ func acceleration(from: Vector2, to: Vector2, from_mass: float, to_mass: float) 
 	var acceleration = force_vector / from_mass
 	
 	return acceleration
+
+
+func _on_control_gui_input(event):
+	if event is InputEventMouseButton:
+		if event.button_mask == 1:
+			dragging = true
+		elif event.button_mask == 0:
+			dragging = false
+	
+	if event is InputEventMouseMotion and dragging:
+		global_position += event.relative
